@@ -1,0 +1,49 @@
+{% extends "test.html" %}
+{% block title%}
+    留言吧
+{% endblock%}
+
+{% block content %}
+
+<!--<a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101070795&redirect_uri=http:www.51zhjk.com.cn&scope=get_user_info" class="nav"><img src="http://115.29.164.186/media/QQ.png"/></a>
+-->
+<div class="container-fluid">
+	<div class="row-fluid">
+    <div class="span2">
+      <!--Sidebar content-->
+    </div>
+	
+    <div class="span10">
+      <!--Body content-->
+		{% for contact in contacts.object_list  %}
+        <h2 class="text-error">{{ contact.blog_title }}</h2>
+        <p>{{ contact.createtime|date }}</p>
+        <p>
+		{% autoescape off %}
+		{{ contact.blog_content }}
+		{% endautoescape %}
+		</p>
+		<p><a class="btn" href="/blog/{{ contact.id}}">查看更多 »</a></p>
+        <hr/>
+		{% endfor %}
+
+	<div class="pagination">
+		<span class="step-links">
+		<ul contenteditable="false">
+		{% if contacts.has_previous %}
+		<li><a href="?page={{ contacts.previous_page_number }}">上一页</a></li>
+		{% endif %}
+		<li>
+			 <span class="current">
+                 Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+            </span>
+		</li>	
+		{% if contacts.has_next %}
+		<li><a href="?page={{ contacts.next_page_number }}">下一页</a></li>
+		{% endif %}
+		</ul>
+	</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+Any suggeestions ? *Please* put it in the project issues at http://code.google.com/p/django-ck/issues/
+
+:)

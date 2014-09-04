@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title%}
+    留言吧
+{% endblock%}
+{% block content %}
+    {% for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.datetime|date }}</p>
+        <p>{{ post.content }}</p>
+        <hr />
+    {% endfor %}
+    {% if is_paginated %}
+        <table>
+            <tr>
+                {% if has_previous %}
+                <td><a href="?page={{ previous }}">&lt;&lt; 上一页 </a></td>
+                {% endif %}
+                {% if has_next %}
+                <td><a href="?page={{ next }}"> 下 一 页 &gt;&gt;</a></td>
+                {% endif %}
+                <td> 第 {{ page }} 页,共 {{ pages }} 页 </td>
+                <form action="." method="get">
+                <td>&nbsp;&nbsp; 到第 </td>
+                <td><input name="page" type="text" size="2"></td>
+                <td> 页 </td>
+                <td><input type="submit" value=" 跳转 "></td>
+            </tr>
+        </table>
+    {% endif %}
+{% endblock %}

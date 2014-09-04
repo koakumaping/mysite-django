@@ -1,0 +1,17 @@
+{% extends "test.html" %}
+
+{% block title %} blog list {% endblock %}
+
+
+{% block content %}
+<div class="content">
+    {% for blog in blogs %}
+		<h3><a href="{% url 'detailblog' blog.id %}">{{ blog.blog_title }}</a></h3>
+        <div>
+			{% autoescape off %} 
+			{{ blog.blog_content}}
+			{% endautoescape %}
+		</div> 
+    {% endfor %}     
+</div>    
+{% endblock %}

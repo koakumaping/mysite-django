@@ -1,0 +1,47 @@
+{% extends 'test.html' %}
+{% block title %}
+登录
+{% endblock%}
+{% block content %}
+<div>
+    <h2>用户登录</h2>
+    {% if form.has_errors %}
+        <ul>
+            <li>
+                您输入的用户名或密码错误！ 请重新输入
+            </li>
+        </ul>
+    {% endif %}
+    <form method="post" action=".">
+
+		{% if request.user.is_authenticated %}
+        <div class="left">
+            <a href=#>欢迎您：{{request.user}}</a>  
+            <a class="btn danger small" href="/main/logout/">注销</a>
+        </div>
+		{% else %}
+			<table class="noframe">
+            <tr>
+                <td align="right">用户名：</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td align="right">密码：</td>
+                <td>
+                    {{ form.password }}
+                </td>
+                <td>
+                    <a href="/main/password/reset/"> 忘 了 密 码 </a>
+                    <input type="hidden" name="next" value="/main/login/" />
+                </td>
+			<td colspan="2" align="center">
+                    <button class="btn btn-primary" type="submit">登录</button>
+			</td>
+          </form>
+		{% endif %}
+
+        </table>
+        {% csrf_token %}
+    </form>
+</div>
+{% endblock %}

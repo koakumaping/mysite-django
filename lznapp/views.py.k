@@ -1,0 +1,69 @@
+﻿# -*- coding: utf-8 -*-  
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.template import RequestContext, Template
+from django.utils.encoding import smart_str, smart_unicode
+import hashlib
+from xml.etree import ElementTree as etree
+
+def apptest(request):
+    f = open('/kim/www/mysite/lznapp/a.txt', 'w')
+    f.write("====lznapp=====")
+    if request.method=='GET':
+        response=HttpResponse(checkSignature(request))
+        return response
+    else:
+        xmlstr = smart_str(request.body)
+        xml = etree.fromstring(xmlstr)
+
+        ToUserName = xml.find('ToUserName').text
+        FromUserName = xml.find('FromUserName').text
+        CreateTime = xml.find('CreateTime').text
+        MsgType = xml.find('MsgType').text
+        replystr = ""
+
+        #f = open('/kim/www/mysite/lznapp/a.txt', 'w')
+        f.write("=========" + MsgType)
+
+        if MsgType == 'event' :
+            Event = xml.find('Event').text
+        if Event == 'subscribe' :
+            replystr = '欢迎加入健康管理吧！'
+        elif MsgType == 'text' :
+            MsgId = xml.find('MsgId').text
+            Content = xml.find('Content').text
+            f.write("=========content:" + Content )
+            #if Content == 'hello' :
+            #    replystr = '你好！' 
+            #else :
+            #    replystr = Content + " it is test"
+            replystr = Content + " it is test"
+
+            f.close()
+
+        reply_xml = """<xml>
+        <ToUserName><![CDATA[%s]]></ToUserName>
+        <FromUserName><![CDATA[%s]]></FromUserName>
+        <CreateTime>%s</CreateTime>
+        <MsgType><![CDATA[text]]></MsgType>
+        <Content><![CDATA[%s]]></Content>
+        </xml>"""\
+                    %(FromUserName,ToUserName,CreateTime, replystr)
+        return HttpResponse(reply_xml)
+
+def checkSignature(request):
+    signature=request.GET.get('signature',None)
+    timestamp=request.GET.get('timestamp',None)
+    nonce=request.GET.get('nonce',None)
+    echostr=request.GET.get('echostr',None)
+    token="mysetting"
+
+    tmplist=[token,timestamp,nonce]
+    tmplist.sort()
+    tmpstr="%s%s%s"%tuple(tmplist)
+    tmpstr=hashlib.sha1(tmpstr).hexdigest()
+    if tmpstr==signature:
+        return echostr
+    else:
+        return None
+

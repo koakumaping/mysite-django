@@ -1,0 +1,12 @@
+{% extends "test.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h3>{{ blog.blog_title }}</h3>
+    <div>
+	{% autoescape off %}
+	{{ blog.blog_content }}
+	{% endautoescape %}
+	</div>
+</div>
+{% endblock %}
