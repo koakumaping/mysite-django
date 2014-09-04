@@ -1,4 +1,0 @@
-mysite-django
-=============
-
-A site.
