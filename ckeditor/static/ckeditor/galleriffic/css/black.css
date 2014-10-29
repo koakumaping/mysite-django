@@ -18,16 +18,16 @@ div#footer {
 div.caption-container {
 	color: #eee;
 }
-div.image-title {
-	font-weight: bold;
-	font-size: 1.4em;
-}
-div.image-desc {
-	line-height: 1.3em;
-	padding-top: 12px;
+div.image-title {
+	font-weight: bold;
+	font-size: 1.4em;
+}
+div.image-desc {
+	line-height: 1.3em;
+	padding-top: 12px;
 }
 div.download {
-	margin-top: 8px;
+	margin-top: 8px;
 }
 div.photo-index {
 	color: #888;
@@ -38,20 +38,20 @@ div.navigation a.prev {
 div.navigation a.next {
 	background-image: url(nextPageArrowWhite.gif);
 }
-div.loader {
+div.loader {
 	background-image: url(loaderWhite.gif);
 }
-div.slideshow img {
-	border-color: #333;
-}
-ul.thumbs li.selected a.thumb {
-	background: #fff;
+div.slideshow img {
+	border-color: #333;
 }
-div.pagination a:hover {
+ul.thumbs li.selected a.thumb {
+	background: #fff;
+}
+div.pagination a:hover {
 	background-color: #111;
 }
-div.pagination span.current {
-	background-color: #fff;
-	border-color: #fff;
-	color: #000;
+div.pagination span.current {
+	background-color: #fff;
+	border-color: #fff;
+	color: #000;
 }

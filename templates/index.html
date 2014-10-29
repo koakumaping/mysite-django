@@ -1,49 +1,655 @@
-{% extends "test.html" %}
-{% block title%}
-    留言吧
-{% endblock%}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-{% block content %}
+<title>校园帮帮团</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta charset="utf-8">
+<link href="/static/css/cate100_.css" rel="stylesheet" type="text/css">
+<link href="/static/css/cate100kz1.css" rel="stylesheet" type="text/css">
+<link href="/static/css/iscroll.css" rel="stylesheet" type="text/css">
 
-<!--<a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101070795&redirect_uri=http:www.51zhjk.com.cn&scope=get_user_info" class="nav"><img src="http://115.29.164.186/media/QQ.png"/></a>
+<style>
+<!-- {
+if 3>2
+}
 -->
-<div class="container-fluid">
-	<div class="row-fluid">
-    <div class="span2">
-      <!--Sidebar content-->
-    </div>
-	
-    <div class="span10">
-      <!--Body content-->
-		{% for contact in contacts.object_list  %}
-        <h2 class="text-error">{{ contact.blog_title }}</h2>
-        <p>{{ contact.createtime|date }}</p>
-        <p>
-		{% autoescape off %}
-		{{ contact.blog_content }}
-		{% endautoescape %}
-		</p>
-		<p><a class="btn" href="/blog/{{ contact.id}}">查看更多 »</a></p>
-        <hr/>
-		{% endfor %}
+#cate1 .mainmenu li .menutitle { font-size: 24px;
+    padding: 20px 0; color:#000000;
+    position: inherit;background-color: rgba(0, 0, 0, 0);}
+#cate1 .mainmenu li .menubtn {
+	box-shadow: none;-moz-box-shadow:none;-webkit-box-shadow:none;
+}
+#cate1 .mainmenu li .menubtn .menumesg {
+    position: inherit;
+}
+#cate1 .mainmenu li .menubtn .menuimg {
+        display:none
+}
+#cate1 .mainmenu li .menubtn {
+    border-radius:0;
+    margin: 0;
+}
+#cate1 .mainmenu {
+    padding: 0;
+}
+#cate1 .mainmenu li {
+    margin-right:0;
+} 
+#cate1 .mainmenu li:nth-child(10n+1) .menubtn{
+        background-color:#fd9e0c;
+}
+#cate1 .mainmenu li:nth-child(10n+2) .menubtn{
+        background-color:#474548;
+}
+#cate1 .mainmenu li:nth-child(10n+3) .menubtn{
+        background-color:#d43316;
+}
+#cate1 .mainmenu li:nth-child(10n+4) .menubtn{
+        background-color:#034e78;
+}
+#cate1 .mainmenu li:nth-child(10n+5) .menubtn{
+        background-color:#436773;
+}
+#cate1 .mainmenu li:nth-child(10n+6) .menubtn{
+        background-color:#2cb9b3;
+}
+#cate1 .mainmenu li:nth-child(10n+7) .menubtn{
+        background-color:#2bba67;
+}
+#cate1 .mainmenu li:nth-child(10n+8) .menubtn{
+        background-color:#037863;
+}
+#cate1 .mainmenu li:nth-child(10n+9) .menubtn{
+        background-color:#844F00;
+}
+#cate1 .mainmenu li:nth-child(10n+10) .menubtn{
+        background-color:#B88E2C;
+}<!-- {
+/if
+}
+-->
+  .themeStyle{ background-color:#E83407 !important; } 
+</style>
+  
 
-	<div class="pagination">
-		<span class="step-links">
-		<ul contenteditable="false">
-		{% if contacts.has_previous %}
-		<li><a href="?page={{ contacts.previous_page_number }}">上一页</a></li>
-		{% endif %}
-		<li>
-			 <span class="current">
-                 Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-            </span>
-		</li>	
-		{% if contacts.has_next %}
-		<li><a href="?page={{ contacts.next_page_number }}">下一页</a></li>
-		{% endif %}
-		</ul>
+<script src="/static/js/jquery.min.js" type="text/javascript"></script>
+<script src="/static/js/swipe.js" type="text/javascript"></script>
+<script src="/static/js/iscroll.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var myScroll;
+
+function loaded() {
+myScroll = new iScroll('wrapper', {
+snap: true,
+momentum: false,
+hScrollbar: false,
+onScrollEnd: function () {
+document.querySelector('#indicator > li.active').className = '';
+document.querySelector('#indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
+}
+ });
+ 
+ 
+}
+
+document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+
+<script>
+    $(function(){
+        window.swiper_2 = new Swipe(document.getElementById('list_uls'), {
+            speed:500,
+           // auto:3000,
+            callback: function(){
+               var lis = $(".nav_for_list_ul ul:first-of-type li");
+               lis.removeClass("on").eq(this.index).addClass("on");
+               var las = $(".nav_for_list_ul ul:nth-of-type(2) a");
+               las.removeClass("on").eq(this.index).addClass("on");
+
+               var minIndex = 0;
+               var maxIndex = Math.max(0, nav_uls.length - 3);
+               var range = [this.index-1, minIndex, maxIndex];
+               //
+
+               range = range.sort(function(a, b){
+                       	return a>b?1:-1;
+                       });
+               window.nav_uls.slide(range[1]);
+            }
+        });
+    });
+</script>
+
+<style>#haloword-pron { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -34px; }#haloword-pron:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -34px; }#haloword-open { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -17px; }#haloword-open:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -17px; }#haloword-close { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px 0; }#haloword-close:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px 0; }#haloword-add { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -51px; }#haloword-add:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -51px; }#haloword-remove { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -94px -68px; }#haloword-remove:hover { background: url(chrome-extension://bhkcehpnnlgncpnefpanachijmhikocj/img/icon.svg) -111px -68px; }</style><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style><style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -90px !important;
+    width: 180px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style>
+
+</head>
+
+<body id="cate100" ryt13676="1">
+
+<div class="banner">
+	<div id="wrapper" style="overflow: hidden;">
+		<div id="scroller" style="width: 9515px; -webkit-transition: 0ms; transition: 0ms;">
+			<ul id="thelist">
+
+			<li>
+			<a href=""><img src="/static/bbbpic/jpg/bbt.jpg" style="width: 1903px;"></a></li>
+
+			<li>
+			<p></p>
+			<a href=""><img src="/static/bbbpic/jpg/bbt.jpg" style="width: 1903px;"></a></li>
+
+			<li>
+			<p></p>
+			<a href=""><img src="/static/bbbpic/jpg/bbt.jpg" style="width: 1903px;"></a></li>
+
+			<li>
+			<p></p>
+			<a href=""><img src="/static/bbbpic/jpg/bbt.jpg" style="width: 1903px;"></a></li>
+			
+			<li>
+			<p></p>
+			<a href=""><img src="/static/bbbpic/jpg/bbt.jpg" style="width: 1903px;"></a></li>
+
+			</ul>
+		</div>
+	  </div>
+	  
+	<div id="nav">
+	<div id="prev" onclick="myScroll.scrollToPage(&#39;prev&#39;, 0,400,5);return false">← prev</div>
+	<ul id="indicator">
+			<li class="active">1</li>
+			<li class="">2</li>
+			<li class="">3</li>
+			<li class="">4</li>
+			<li class="">5</li>
+		  </ul>
+	<div id="next" onclick="myScroll.scrollToPage(&#39;next&#39;, 0,400,5);return false">next →</div>
 	</div>
-	</div>
-	</div>
+	<div class="clr"></div>
 </div>
-{% endblock %}
+
+<div id="insert1"><a class="btntel" href="http://wd.koudai.com/item.html?itemID=208647868&p=0">即刻预约办理校园宽带200元话费免费送</a>
+<style>
+.btntel {
+color: #fff;
+font-size: 18px;
+padding: 10px;
+text-align: center;
+display: block;
+background:#272727;
+background-size: 30px;
+margin: 10px;
+border-radius: 5px;
+}
+</style>
+</div>
+
+<div class="imgmenu">
+<ul>
+	<li><a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/png/1.png"><p>考试培训</p></a></li>
+	<li><a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/png/2.png"><p>团购频道</p></a></li>
+	<li><a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/png/3.png"><p>微社区</p></a></li>
+	<li><a href="http://115.29.168.19/blog/2/"><img src="/static/bbbpic/png/4.png"><p>乐活在舟东</p></a></li>
+</ul>
+
+<ul>
+	<li><a href="http://115.29.168.19/employlist/"><img src="/static/bbbpic/png/5.png"><p>兼职信息</p></a></li>
+	<li><a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/png/6.png"><p>创业资讯</p></a></li>
+	<li><a href="http://wd.koudai.com/s/207943782?wfr=c"><img src="/static/bbbpic/png/7.png"><p>微优惠</p></a></li>
+	<li><a href="http://mp.weixin.qq.com/s?__biz=MzA3Nzg0NTQyNw==&mid=201035014&idx=1&sn=666d1bfba9f3fae7017362f649b683a4#rd"><img src="/static/bbbpic/png/8.png"><p>校园帮帮团</p></a></li>
+</ul>
+</div>
+
+ 
+
+
+<section>
+<nav class="nav_for_list_ul">
+
+<div class="ofh">
+	<ul>
+		<li class="on"></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<ul>
+		<div id="nav_uls" style="width: 33.3%; visibility: visible;">
+			<ol style="list-style: none; width: 2534.75px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate3d(0px, 0px, 0px);">
+			<li style="width: 633.6875px; float: left; vertical-align: top;"><a href="javascript:swiper_2.slide(0);" class="on"><img src="/static/bbbpic/SGpGGRNnT1.png">热门</a></li>
+			<li style="width: 633.6875px; float: left; vertical-align: top;"><a href="javascript:swiper_2.slide(1);"><img src="/static/bbbpic/PD4eSNabuI.png">吃喝玩乐</a></li>
+			<li style="width: 633.6875px; float: left; vertical-align: top;"><a href="javascript:swiper_2.slide(2);"><img src="/static/bbbpic/mJVmXSFWUQ.png">校园相关</a></li>
+			<!--<li style="width: 633.6875px; float: left; vertical-align: top;"><a href="javascript:swiper_2.slide(3);"><img src="./bbbpic/8vwXsk5hSF.png">房产/家居</a></li>-->
+			</ol>
+		</div>
+    </ul>
+	
+    <script>
+	window.nav_uls = new Swipe(document.getElementById('nav_uls'), {
+		speed:500,
+		callback: function(){
+			if(this.index>(this.length-3)){
+				this.slide(this.length-3);
+			}	
+		}
+	}
+	);
+</script> 
+</div>
+</nav>
+<!------------------------------------------------------------------------------------------------------------------------------------>
+<div id="list_uls" class="list_uls box_swipe" style="visibility: visible;">
+
+<ul style="list-style: none; width: 7612px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate3d(0px, 0px, 0px);">
+<li style="width: 1903px; float: left; vertical-align: top;">
+<dl>
+
+
+<dd> <a href="http://115.29.168.19/blog/4/">
+	<figure>
+	<div><img src="/media/uploads/2014/09/01/11.jpg"></div>
+	<figcaption>
+	<label>独轮电动车</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/lostthing/1/">
+	<figure>
+	<div><img src="/static/bbbpic/t2.jpg"></div>
+	<figcaption>
+	<label>失物招领</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+</dl>
+</li>
+
+
+<!------------------------------------------------------------------------------------------------------------------------------------>
+<li style="width: 1903px; float: left; vertical-align: top;">
+<dl>
+
+<dd> <a href="http://115.29.168.19/blog/20/">
+	<figure>
+	<div><img src="/static/chihewanle/ahgjw.jpg"></div>
+	<figcaption>
+	<label>阿浩盖浇王</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+<dd> <a href="http://115.29.168.19/blog/13/">
+	<figure>
+	<div><img src="/static/chihewanle/ampt.jpg"></div>
+	<figcaption>
+	<label>澳门葡挞</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/19/">
+	<figure>
+	<div><img src="/static/chihewanle/dnsj.jpg"></div>
+	<figcaption>
+	<label>大娘水饺</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/10/">
+	<figure>
+	<div><img src="/static/chihewanle/fzy.jpg"></div>
+	<figcaption>
+	<label>方之缘</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/23/">
+	<figure>
+	<div><img src="/static/chihewanle/hdzp.jpg"></div>
+	<figcaption>
+	<label>红豆粥铺</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/15/">
+	<figure>
+	<div><img src="/static/chihewanle/huage.jpg"></div>
+	<figcaption>
+	<label>花哥休闲美食</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/12/">
+	<figure>
+	<div><img src="/static/chihewanle/ltxbd.jpg"></div>
+	<figcaption>
+	<label>老桐乡煲店</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/17/">
+	<figure>
+	<div><img src="/static/chihewanle/ltmgd.jpg"></div>
+	<figcaption>
+	<label>老汤面疙瘩</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/21/">
+	<figure>
+	<div><img src="/static/chihewanle/ljxlg.jpg"></div>
+	<figcaption>
+	<label>龙记香辣馆</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/24/">
+	<figure>
+	<div><img src="/static/chihewanle/mjk.jpg"></div>
+	<figcaption>
+	<label>买几客鸡排</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/14/">
+	<figure>
+	<div><img src="/static/chihewanle/mhfd.jpg"></div>
+	<figcaption>
+	<label>闵杭饭店</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/suggestboard/3/">
+	<figure>
+	<div><img src="/static/chihewanle/ngnd.jpg"></div>
+	<figcaption>
+	<label>那个年代</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/22/">
+	<figure>
+	<div><img src="/static/chihewanle/qdhnscy.jpg"></div>
+	<figcaption>
+	<label>奶酸菜鱼</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/18/">
+	<figure>
+	<div><img src="/static/chihewanle/wzsrw.jpg"></div>
+	<figcaption>
+	<label>温州瘦肉丸</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+<dd> <a href="http://115.29.168.19/blog/16/">
+	<figure>
+	<div><img src="/static/chihewanle/xwky.jpg"></div>
+	<figcaption>
+	<label>新味烤鱼</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+</dl>
+</li>
+
+<!------------------------------------------------------------------------------------------------------------------------------------>
+
+
+<li style="width: 1903px; float: left; vertical-align: top;">
+<dl>
+
+<dd> <a href="http://wd.koudai.com/item.html?itemID=208647868&p=0">
+	<figure>
+	<div><img src="/static/bbbpic/jpg/kuandai.jpg"></div>
+	<figcaption>
+	<label>办宽带</label>
+	</figcaption>
+	</figure>
+</a> </dd>
+
+</dl>
+</li>
+
+<!------------------------------------------------------------------------------------------------------------------------------------>
+
+</ul>
+</div>
+</section>
+
+
+<script>
+var count = document.getElementById("thelist").getElementsByTagName("img").length;
+
+for(i=0;i<count;i++){
+ document.getElementById("thelist").getElementsByTagName("img").item(i).style.cssText = " width:"+document.body.clientWidth+"px";
+
+}
+
+document.getElementById("scroller").style.cssText = " width:"+document.body.clientWidth*count+"px";
+
+
+ setInterval(function(){
+myScroll.scrollToPage('next', 0,400,count);
+},3500 );
+
+window.onresize = function(){ 
+for(i=0;i<count;i++){
+document.getElementById("thelist").getElementsByTagName("img").item(i).style.cssText = " width:"+document.body.clientWidth+"px";
+
+}
+
+ document.getElementById("scroller").style.cssText = " width:"+document.body.clientWidth*count+"px";
+} 
+
+</script> 
+
+<div id="insert2"></div>
+ 
+ <div class="copyright">© 2012-2014 @校园帮帮团 版权所有</div> <div style="display:none"> </div>
+<script type="text/javascript">
+ 	        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        window.shareData = {  
+           "imgUrl": "/static/bbbpic/1.png", 
+            "timeLineLink":   "http://115.29.168.19/",
+            "sendFriendLink": "http://115.29.168.19/",
+            "weiboLink":      "http://115.29.168.19/",
+            "tTitle": "点击进入-校园帮帮帮微生活平台",
+            "tContent": "校园帮帮帮
+客服微信号：gh_69548fb6a6fe",
+            "fTitle": "点击进入-校园帮帮帮微生活平台",
+            "fContent": "校园帮帮帮
+客服微信号：gh_69548fb6a6fe",
+            "wContent": "校园帮帮帮
+            "wContent": "校园帮帮帮
+客服微信号：gh_69548fb6a6fe" 
+        };
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', { 
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.fContent,
+                "title": window.shareData.fTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function (argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.wContent,
+                "url": window.shareData.weiboLink,
+            }, function (res) {
+                _report('weibo', res.err_msg);
+            });
+        });
+        }, false)
+    </script> 
+ 
+<style type="text/css">
+body { margin-bottom:60px !important; }
+a, button, input { -webkit-tap-highlight-color:rgba(255, 0, 0, 0); }
+ul, li { list-style:none; margin:0; padding:0 }
+.top_bar { position: fixed; z-index: 900; bottom: 0; left: 0; right: 0; margin: auto; font-family: Helvetica, Tahoma, Arial, Microsoft YaHei, sans-serif; }
+.top_menu { display:-webkit-box; border-top: 1px solid #3D3D46; display: block; width: 100%; background: rgba(255, 255, 255, 0.7); height: 40px; display: -webkit-box; display: box; margin:0; padding:0; -webkit-box-orient: horizontal; background: -webkit-gradient(linear, 0 0, 0 100%, from(#697077), to(#3F434E), color-stop(60%, #464A53)); box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.3) inset; }
+.top_bar .top_menu>li { -webkit-box-flex:1; background: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.1)), color-stop(50%, rgba(0, 0, 0, 0.3)), to(rgba(0, 0, 0, 0.4))), -webkit-gradient(linear, 0 0, 0 100%, from(rgba(255, 255, 255, 0.1)), color-stop(50%, rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.15))); ; -webkit-background-size:1px 100%, 1px 100%; background-size:1px 100%, 1px 100%; background-position: 1px center, 2px center; background-repeat: no-repeat; position:relative; text-align:center; }
+.top_menu li:first-child { background:none; }
+.top_bar .top_menu li a { line-height:40px; display:block; text-align:center; color:#FFF; text-decoration:none; text-shadow: 0 1px rgba(0, 0, 0, 0.3); -webkit-box-flex:1; }
+.top_bar .top_menu li a label { padding:3px 0 0 3px; font-size:12px; overflow:hidden; }
+.top_bar .top_menu>li>a img { display: inline-block; height: 20px; width: 20px; margin-top:-2px; color: #fff; line-height: 40px; vertical-align:middle; }
+.top_bar li:first-child a { display: block; }
+.menu_font { text-align:left; position:absolute; right:10px; z-index:500; background: -webkit-gradient(linear, 0 0, 0 100%, from(#697077), to(#3F434E), color-stop(60%, #464A53)); border-radius: 5px; width: 120px; margin-top: 10px; padding: 0; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3); }
+.menu_font.hidden { display:none; }
+.menu_font { top:inherit !important; bottom:55px; }
+.menu_font li a { text-align: left !important; }
+.top_menu li:last-of-type a { background: none; }
+.menu_font:after { top: inherit!important; bottom: -6px; border-color: #464A53 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0); border-width: 6px 6px 0; position: absolute; content: ""; display: inline-block; width: 0; height: 0; border-style: solid; left: 70%; }
+.menu_font li { border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+.menu_font li:first-of-type { border-top: 0; }
+.menu_font li:last-of-type { border-bottom: 0; }
+.menu_font li a { height: 40px; line-height: 40px !important; position: relative; color: #fff; display: block; width: 100%; text-indent: 10px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.menu_font li a img { width: 20px; height:20px; display: inline-block; margin-top:-2px; color: #fff; line-height: 40px; vertical-align:middle; }
+#menu_list0 { right:0; left:10px; }
+#menu_list0:after { left: 20%; }
+#sharemcover { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: none; z-index: 20000; }
+#sharemcover img { position: fixed; right: 18px; top: 5px; width: 260px; height: 180px; z-index: 20001; border:0; }
+.top_bar .top_menu>li>a:hover, .top_bar .top_menu>li>a:active { background-color:#333; }
+.menu_font li a:hover, .menu_font li a:active { background-color:#333; }
+.menu_font li:first-of-type a { border-radius:5px 5px 0 0; }
+.menu_font li:last-of-type a { border-radius:0 0 5px 5px; }
+#plug-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); z-index:800; }
+#cate18 .device {bottom: 40px;}
+#cate18 #indicator {bottom: 240px;}
+#cate19 .device {bottom: 40px;}
+#cate19 #indicator {bottom: 330px;}
+#cate19 .pagination {bottom: 60px;}
+#cate60 .device {bottom: 55px;}
+#cate61 .device {bottom: 55px;}
+#cate74 .device {bottom: 55px;}
+#cate75 .device {bottom: 55px;}
+#cate63 #indicator {bottom: 80px;}
+</style>
+
+
+<div id="sharemcover" onclick="document.getElementById(&#39;sharemcover&#39;).style.display=&#39;&#39;;" style=" display:none"><img src="/static/bbbpic/MgnnofmleM.png"></div>
+<div class="top_bar" style="-webkit-transform:translate3d(0,0,0)">
+	<nav>
+	<ul id="top_menu" class="top_menu">
+	
+		<li> <a onclick="javascript:displayit(0)"><img src="/static/bbbpic/IbWvMcfJVC.png"><label>商家入驻</label></a>
+			<ul id="menu_list0" class="menu_font" style=" display:none">
+				<li> <a href="http://115.29.168.19/position/"><img src="/static/bbbpic/L5Zn3q3mDm.png"><label>我们地址</label></a></li>
+				<li> <a href="tel:18072740881"><img src="/static/bbbpic/GckUWhdhPS.png"><label>联系电话</label></a></li>
+				<li> <a href="http://115.29.168.19/suggestboard/1/"><img src="/static/bbbpic/IIryNeigXS.png"><label>咨询留言</label></a></li>
+			</ul>
+		</li>
+		
+		<li> <a onclick="javascript:displayit(1)"><img src="/static/bbbpic/k3PlSiKIPy.png"><label>使用帮助</label></a>
+			<ul id="menu_list1" class="menu_font" style=" display:none">
+				<li> <a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/9ujht5y43X.png"><label>积分详解</label></a></li>
+				<li> <a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/mlbj1FG1dz.png"><label>特权说明</label></a></li>
+			</ul>
+		</li>
+		
+		<li> <a onclick="javascript:displayit(2)"><img src="/static/bbbpic/pqjEGr5twQ.png"><label>便民查询</label></a>
+			<ul id="menu_list2" class="menu_font" style=" display:none">
+				<li> <a href="http://115.29.168.19/employlist/"><img src="/static/bbbpic/EcTKRQdxRK.png"><label>兼职信息</label></a></li>
+				<li> <a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/Muy2GdAgKY.png"><label>公共自行车</label></a></li>
+				<!--<li> <a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/2yFKO6TwKI.png"><label>二手信息</label></a></li>-->
+				<!--<li> <a href="http://115.29.168.19/suggestboard/4/"><img src="/static/bbbpic/7rIznPyShS.png"><label>求职招聘</label></a></li>-->
+			</ul>
+		</li>
+		
+		<li> <a href="http://mp.weixin.qq.com/s?__biz=MzA3Nzg0NTQyNw==&mid=201035014&idx=1&sn=666d1bfba9f3fae7017362f649b683a4#rd"><img src="/static/bbbpic/7rIznPyShS.png"><label>关于我们</label></a>
+			<ul id="menu_list3" class="menu_font" style=" display:none">
+			</ul>
+		</li>
+		
+	</ul>
+	</nav>
+
+</div>
+
+
+<div id="plug-wrap" onclick="closeall()" style="display: none;"></div>
+
+<script>
+function displayit(n){
+	var count = document.getElementById("top_menu").getElementsByTagName("ul").length;	
+	for(i=0;i<count;i++){
+		if(i==n){
+		 if(document.getElementById("top_menu").getElementsByTagName("ul").item(n).style.display=='none'){
+			 document.getElementById("top_menu").getElementsByTagName("ul").item(n).style.display='';
+			 document.getElementById("plug-wrap").style.display='';
+			}else{
+				 document.getElementById("top_menu").getElementsByTagName("ul").item(n).style.display='none';
+				  document.getElementById("plug-wrap").style.display='none';
+			}
+		}else{
+			document.getElementById("top_menu").getElementsByTagName("ul").item(i).style.display='none';
+		}
+	}
+}
+function closeall(){
+	var count = document.getElementById("top_menu").getElementsByTagName("ul").length;	
+	for(i=0;i<count;i++){
+		 document.getElementById("top_menu").getElementsByTagName("ul").item(i).style.display='none';
+	}
+	 document.getElementById("plug-wrap").style.display='none';
+}
+
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+WeixinJSBridge.call('hideToolbar');
+});
+</script>

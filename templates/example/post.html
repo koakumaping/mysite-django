@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+post
+{% endblock%}
+
+<form class="form-horizontal" action="." method="post">{% csrf_token %}
+    <fieldset>
+
+    <div class="control-group">
+        <label class="control-label" for="id_name">昵称：</label>
+        <div class="controls">
+            <input type="text" id="id_name" class="input-xlarge" name="name" placeholder="请输入你的昵称" required="required">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="id_comment">评论内容：</label>
+        <div class="controls">
+            <textarea class="input-xlarge comment" id="id_comment" name="ckeditor01" placeholder="请输入你的评论" required="required" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <p style="display:none;"><label for="id_honeypot">如果你在该字段中输入任何内容，那么你的评论就会被视为垃圾评论。</label> <input type="text" name="honeypot" id="id_honeypot"></p>
+    <div class="form-actions">
+        <input class="btn btn-info" type="submit" name="submit" value="发表评论">
+        {# <input class="btn btn-info" type="submit" name="preview" value="Preview"> #}
+        <input type='hidden' name='next' value='{% url "detailblog" id %}'/>
+    </div>
+
+    </fieldset>
+</form>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title%}
+    校园帮帮团
+{% endblock%}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row-fluid">
+    <div class="span2">
+      <!--Sidebar content-->
+    </div>
+	
+    <div class="span10">
+      <!--Body content-->
+		{% for contact in contacts.object_list  %}
+        <h2 class="text-error">{{ contact.employ_title }}</h2>
+        <p>{{ contact.createtime|date }}</p>
+		{% autoescape off %}
+		{{ contact.employ_content | truncatewords:"17"}}
+		{% endautoescape %}
+		<p><a class="btn" href="/employ/{{ contact.id}}">查看更多 »</a></p>
+        <hr/>
+		{% endfor %}
+
+	<div class="pagination">
+		<span class="step-links">
+		<ul contenteditable="false">
+		{% if contacts.has_previous %}
+		<li><a href="?page={{ contacts.previous_page_number }}">上一页</a></li>
+		{% endif %}
+		<li>
+			 <span class="current">
+                 Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+            </span>
+		</li>	
+		{% if contacts.has_next %}
+		<li><a href="?page={{ contacts.next_page_number }}">下一页</a></li>
+		{% endif %}
+		</ul>
+	</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

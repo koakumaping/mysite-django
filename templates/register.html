@@ -6,9 +6,9 @@
 <div>
     <h2>用户注册</h2>
     <form method="post" action=".">
-        {{ form.as_p }}{% csrf_token %}
-        <input type="submit" value="注册" />
-</form>
+        {{ form.as_ul }}{% csrf_token %}
+        <input type ="submit" value="注册" />
+    </form>
 </div>
 {% endblock %}
 

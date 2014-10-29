@@ -2,7 +2,7 @@
 from django import forms
 
 import re
-
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from messageboard.models import *
@@ -44,7 +44,7 @@ class RegistrationForm(forms.Form):
 
 class MsgPostForm(forms.Form):
 	title = forms.CharField(label='标题', max_length=30)
-	content = forms.CharField(label='文章',widget=forms.Textarea)
+	content = forms.CharField(label='评论',widget=forms.Textarea)
 	
 	def clean_title(self):
 		title = self.cleaned_data['title']

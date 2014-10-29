@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title%}
+    校园帮帮团
+{% endblock%}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="row-fluid">
+    <div class="span2">
+
+    <!--Sidebar content-->
+    </div>
+    <div class="span10">
+
+    {% for msg in msg %}
+		<h2 class="text-error">{{ msg.title }}</h2>
+        <p>{{ msg.datetime|date }}</p>
+        <div>
+			{% autoescape off %}
+			{{ msg.content }}
+			{% endautoescape %}
+        <hr/>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+    <ul contenteditable="false">
+    {% if contacts.has_previous %}
+    <li><a href="?page={{ contacts.previous_page_number }}">上一页</a></li>
+    {% endif %}
+    <li>
+         <span class="current">
+             Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+    </li>
+    {% if contacts.has_next %}
+    <li><a href="?page={{ contacts.next_page_number }}">下一页</a></li>
+    {% endif %}
+    </ul>
+</div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from ck.fields import CKEditor
-from blog.models import blog_main
+from blog.models import context
 from django.db import models
 
 class ArticleAdmin( admin.ModelAdmin ):
@@ -10,4 +10,4 @@ class ArticleAdmin( admin.ModelAdmin ):
 		models.TextField: {'widget' : CKEditor(ck_attrs={'width':'auto'})},
 }
 
-admin.site.register( blog_main, ArticleAdmin )
+admin.site.register( context, ArticleAdmin )

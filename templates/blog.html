@@ -1,12 +1,76 @@
-{% extends "test.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container-fluid">
+<div class="row-fluid">
     <h3>{{ blog.blog_title }}</h3>
     <div>
 	{% autoescape off %}
 	{{ blog.blog_content }}
-	{% endautoescape %}
-	</div>
+
+    {%load comments%}
+    {% get_comment_count for blog as comment_count %}
+    <h4>该文章有 {{ comment_count }} 条评论。</h4>
+    {% get_comment_list for blog as comment_list %}
+    {% for comments in comment_list %}
+
+    <div>
+        <h4>{{ comments.name }}的评论：</h4>
+
+        <PRE>&#9<h5>{{ comments.comment }}</h5></PRE>
+        <br>
+    </div>
+
+    {% endfor %}
+    {% endautoescape %}
+    <article>
+        {% get_comment_form for blog as blog_form %}
+            <div id="comment_form">
+                <h4 class="muted comtop">发表新评论</h4>
+                <form class="form-horizontal" action="{% comment_form_target %}" method="post">{% csrf_token %}
+                    <fieldset>
+
+                    {{ blog_form.object_pk }}
+                    {{ blog_form.content_type }}
+                    {{ blog_form.timestamp }}
+                    {{ blog_form.site }}
+                    {{ blog_form.submit_date }}
+                    {{ blog_form.security_hash }}
+                    <div class="control-group">
+                        <label class="control-label" for="id_name">昵称：</label>
+                        <div class="controls">
+                            <input type="text" id="id_name" class="input-xlarge" name="name" placeholder="请输入你的昵称" required="required">
+                        </div>
+                    </div>
+		<!--
+                    <div class="control-group">
+                        <label class="control-label" for="id_email">邮箱：</label>
+                        <div class="controls">
+                            <input class="input-xlarge" id="id_email" type="email" name="email" placeholder="please enter email" required="required">
+                        </div>
+                    </div>
+		-->
+                    <div class="control-group">
+                        <label class="control-label" for="id_comment">评论内容：</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge comment" id="id_comment" name="comment" placeholder="请输入你的评论" required="required" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <p style="display:none;"><label for="id_honeypot">如果你在该字段中输入任何内容，那么你的评论就会被视为垃圾评论。</label> <input type="text" name="honeypot" id="id_honeypot"></p>
+                    <div class="form-actions">
+                        <input class="btn btn-info" type="submit" name="submit" value="发表评论">
+                        {# <input class="btn btn-info" type="submit" name="preview" value="Preview"> #}
+                        <input type='hidden' name='next' value='{% url "detailblog" id %}'/>
+                    </div>
+                    </fieldset>
+                </form>
+            </div>
+    </article>
+    <div class="qr_code_pc">
+        <img alt="115.29.168.19" src="/static/bbbpic/getqrcode.jpg" style="width:150px;height:150px;" />
+        <p>微信扫一扫<br>获得更多内容</p>
+    </div>
+    </div>
+</div>
 </div>
 {% endblock %}

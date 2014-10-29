@@ -1,13 +1,15 @@
-{% extends 'test.html' %}
+{% extends 'base.html' %}
 {% block title %}
 注册
 {% endblock%}
 {% block content %}
-    <div align="center">
-        <h1>发表新帖</h1>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h1 class="text-error">发表新留言</h1>
         <form method="post" action=".">
             {{ form.as_p }}{% csrf_token %}
             <input type="submit" value="发表" />
         </form>
     </div>
+</div>
 {% endblock %}
