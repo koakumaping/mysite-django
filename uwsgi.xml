@@ -1,0 +1,11 @@
+<uwsgi>
+<plugin>python</plugin>
+<socket>/tmp/weixin.socket</socket>
+<chmod-socket>777</chmod-socket>
+<pythonpath>/kim/www/mysite/weixin</pythonpath>
+<pythonpath>/kim/www/mysite/pxyweixin</pythonpath>
+<pythonpath>/kim/www/mysite/main</pythonpath>
+<pythonpath>/kim/www/mysite/messageboard</pythonpath>
+<module>mysite.wsgi</module>
+<enable-threads>true</enable-threads>
+</uwsgi>

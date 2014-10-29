@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+
+{% if user %}
+    <li>name : {{ user.name }}</li>
+{% else %}
+用户不存在
+{% endif %}
+
+{% for book in book_list%}
+    <li>{{ book }}</li>
+{% endfor %}
+
+{% for k,v in user.items %}
+    <li>{{ k }}:{{ v }}</li>
+{% endfor%}
+</body>
+</html>
