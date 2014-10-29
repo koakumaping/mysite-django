@@ -1,1 +1,4 @@
-python-2.7.8
+South
+django-simple-captcha
+pytz
+django-pagination
